@@ -2,7 +2,7 @@
 
 The pipeline has been tested on Ubuntu 22.04 LTS using and NVIDIA GPU P100/V100 with Driver Version: 515.86.01.
 
-The full environement can be found in the Dockerfile, below we describe how it can be built using docker container. Note that it is possible to directly setup the environment without the use of docker.
+The full environment can be found in the Dockerfile, below we describe how it can be built using docker container. Note that it is possible to directly setup the environment without the use of docker.
 
 ## Container
 
