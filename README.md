@@ -31,10 +31,10 @@ A step by step guide to calibrating the cameras is described in [calibration.md]
 If you found this code useful, please cite us:
 
 ```
-@misc{mvcamcalibration2023,
+@misc{MAGE2023,
   author        = {Grosche, Wilke and Engilberge, Martin and Fua, Pascal},
   year          = {2023},
-  title         = {Multiview Camera Calibration for Ground Plane Estimation},
+  title         = {Multi-Aspect Groundplane Estimation},
   howpublished = {\url{https://github.com/wgrosche/MultiviewCameraCalibration/}}
 }
 ```
