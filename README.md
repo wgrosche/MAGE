@@ -24,3 +24,8 @@ A step by step guide to calibrating the cameras is described in [calibration.md]
 <p align="center">
 <img src="/images/scaled_groundplane.jpg" alt="Example ground plane projection." width="60%"/>
 </p>
+
+
+#### License
+
+By downloading this program, you commit to comply with the license as stated in the LICENSE file.
