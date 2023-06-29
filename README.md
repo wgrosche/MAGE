@@ -32,7 +32,7 @@ If you found this code useful, please cite us:
 
 ```
 @misc{mvcamcalibration2023,
-  author        = {Grosche, W and Engilberge, M},
+  author        = {Grosche, W and Engilberge, M and Fua, P},
   year          = {2023},
   title         = {Multiview Camera Calibration for Ground Plane Estimation},
   howpublished = {\url{https://github.com/wgrosche/MultiviewCameraCalibration/}}
