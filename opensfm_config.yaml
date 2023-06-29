@@ -1,0 +1,4 @@
+processes: 8
+
+sift_peak_threshold: 0.1
+sift_edge_threshold: 10

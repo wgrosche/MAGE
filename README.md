@@ -1,5 +1,9 @@
 # Multiview Camera Calibration for Ground Plane Estimation
 
+
+### Environment Setup
+
+
 ### 0-calibration-setup
 Prepares the environment, ensures that all necessary arguments are set. Outputs its findings to the logger.
 `python3 0-calibration-setup.py`
