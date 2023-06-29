@@ -15,49 +15,6 @@ class Arguments():
         self.initialize()
 
     def initialize(self):
-
-        #### CALIBRATOR ARGUMENTS ####
-        self.parser.add_argument("--calibration_folder_final_output", "-cfo", 
-                                 type=str, required=False, 
-                                 default="/Users/sarno/Desktop/CALIBRATOR_TEST/DATASET/calibration", 
-                                 help="folder where xml files for intrinsics and extrinsics will be saved")
-        
-        self.parser.add_argument("--dataset_images_folder", "-if", type=str, 
-                                 default="/Users/sarno/Desktop/CALIBRATOR_TEST/DATASET/Image_subset", 
-                                 help="folder where to store original and undistorted frames")
-        
-        self.parser.add_argument("--extracted_frames_folder", "-eff", type=str, 
-                                 default="/Users/sarno/Desktop/CALIBRATOR_TEST/DATASET/Image_subset/original", 
-                                 help="folder where to store original frames in dataset folder")
-        
-        self.parser.add_argument("--undistorted_frames_folder", "-uff", type=str, 
-                                 default="/Users/sarno/Desktop/CALIBRATOR_TEST/DATASET/Image_subset/undistorted", 
-                                 help="folder where to store undistorted frames in dataset folder")
-
-
-        ### INTRINSICS CALIBRATION ARGUMENTS ###
-
-        # if this is set to False then all below arguments are not considered
-        self.parser.add_argument("--intrinsics_calibration", "-ic", 
-                                 action="store_false", required=False)
-
-        self.parser.add_argument("--calibration_folder_images", "-i", type=str, 
-                                 default="/Users/sarno/Desktop/CALIBRATOR_TEST/CALIBRATION_INPUT", 
-                                 help="the folder where the original calibration videos are")
-        
-        self.parser.add_argument("--calibration_output_folder", "-co", type=str, 
-                                 default="/Users/sarno/Desktop/CALIBRATOR_TEST/CALIBRATION_OUT", 
-                                 required=False, 
-                                 help="folder for calibration output from opencv pipeline")
-        
-        self.parser.add_argument("--intrinsics_need_extract_frames", "-ine", 
-                                 type=bool, default=False, required=False, 
-                                 help="need to extract frames of calibration videos")
-        
-        self.parser.add_argument("--nc_to_calib", "-ncc", type=int, default=3, 
-                                 required=False, 
-                                 help="number of cameras we need to calibrate")
-
         # arguments required for compute_intrinsics.py
         self.parser.add_argument("--intrinsics_frame_rate", "-ifr", type=int, 
                                  default=0.9, required=False, 
@@ -143,68 +100,7 @@ class Arguments():
         self.parser.add_argument("--debug", action="store_true", required=False)
 
 
-        ### OPENSFM ARGUMENTS ###
-
-        ## DATA PREPARATION ARGUMENTS ##
-        self.parser.add_argument("--preparation_input_folder", "-pi", type=str, 
-                                 default="/Users/sarno/Desktop/CALIBRATOR_TEST/VIDEO_FOLDER", 
-                                 help="Folder containing #cam folders each one containing a video: input", 
-                                 required=False)
-        
-        self.parser.add_argument("--nc_to_pose", "-ncp", type=int, default=4, 
-                                 required=False, 
-                                 help="number of cameras we need to estimate the pose")
-        
-        self.parser.add_argument("--extrinsic_calibration", "-ec", 
-                                 action="store_false", required=False, 
-                                 help="Cameras need their extrinsics to be computed")
-
-        self.parser.add_argument("--need_to_add_images_to_dataset", "-nai", 
-                                 action="store_true", required=False, 
-                                 help="need to add images to the datset folder")
-        
-        self.parser.add_argument("--extrinsic_need_extract_frames", "-eef", 
-                                 action="store_true", required=False)
-        
-        self.parser.add_argument("--extrinsic_need_undistort_frames", "-euf", 
-                                 action="store_true", required=False)
-
-        self.parser.add_argument("--extrinsics_frame_rate", "-efr", type=float, 
-                                 default=0.1)
-
-        self.parser.add_argument("--use_omnidir", "-om", action="store_true", 
-                                 required=False)
-        
-        self.parser.add_argument("--omnidir_name", "-omn", type=str, 
-                                 default="cam360")
-        
-        self.parser.add_argument("--extrinsics_frame_rate_omni", "-omfr", type=float, 
-                                 default=1.0)
-
-        ## OpenSFM ALGORITHM ARGUMENTS ##
-        self.parser.add_argument("--frames_fisheye", "-ff", type=int, 
-                                 default=5, 
-                                 help="number of frames to use for each camera (not omni)")
-        
-        self.parser.add_argument("--frames_omnidir", "-fo", type=int, 
-                                 default=-1, 
-                                 help="number of frames to use for ommnidirectional")
-        
-        self.parser.add_argument("--openSFM_root", "-sfmroot", type=str, 
-                                 default="/Users/sarno/Desktop/CALIBRATOR_TEST/openSFMroot", 
-                                 help="root folder for opensfm, where data is stored")
-        
-        self.parser.add_argument("--need_to_create_opensfm_dir", "-nco", 
-                                 action="store_true", help="need to create ")
-        
-        self.parser.add_argument("--openSFM_repo", "-sfmrepo", type=str, 
-                                 default="/Users/sarno/Desktop/OpenSfM/", 
-                                 help="repo folder for opensfm, where the files are stored")
-        
-        ## Projection ARGUMENTS ##
-        self.parser.add_argument("--dataset", type=str, default="cvlab", 
-                                 help="the dataset to use")
-        
+     
 
     def parse(self):
         self.args = self.parser.parse_args("")

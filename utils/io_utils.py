@@ -68,16 +68,21 @@ def write_json(filename: str, data: dict) -> None:
 
 
 def rgb2gray(image):
+    """
+        Converts an RGB image to grayscale.
+    """
     dtype = image.dtype
     gray = np.dot(image[...,:3], [0.299, 0.587, 0.114])
     return gray.astype(dtype)
 
 def rmdir(directory):
+    """ Remove directory and all its contents"""
     directory = os.path.abspath(directory)
     if os.path.exists(directory): 
         shutil.rmtree(directory)  
 
 def mkdir(directory):
+    """ Create directory if it doesn't exist"""
     directory = os.path.abspath(directory)
     if not os.path.exists(directory):
         os.makedirs(directory)

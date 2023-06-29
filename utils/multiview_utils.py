@@ -173,49 +173,6 @@ class BaseCamera:
         
         return first_frame
     
-    # def _extract_frame(self, video_capture: cv2.VideoCapture, 
-    #                    frame_number: int, max_attempts: int = 50) -> np.ndarray:
-    #     """Extracts a frame from a video capture object.
-
-    #     Arguments:
-    #     ----------
-    #     video_capture : cv2.VideoCapture
-    #         The video capture object.
-    #     frame_number : int
-    #         The frame number to extract.
-    #     max_attempts : int, optional
-    #         The maximum number of attempts to load the frame (default is 10).
-
-    #     Returns:
-    #     --------
-    #     frame : np.ndarray
-    #         The extracted frame.
-    #     """
-    #     if (frame_number < 0 or 
-    #         frame_number >= video_capture.get(cv2.CAP_PROP_FRAME_COUNT)):
-    #         raise ValueError(f"Invalid frame number {frame_number} for video "
-    #                         f"with {video_capture.get(cv2.CAP_PROP_FRAME_COUNT)}"
-    #                         " frames")
-
-    #     if max_attempts <= 0:
-    #         raise ValueError("max_attempts must be a positive integer")
-        
-    #     # video_capture.set(cv2.CAP_PROP_POS_AVI_RATIO, frame_number / video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
-
-    #     video_capture.set(cv2.CAP_PROP_POS_FRAMES, frame_number)
-
-    #     for attempt in range(max_attempts):
-    #         ret, frame = video_capture.read()
-    #         if ret:
-    #             return frame
-
-    #     log.warning(f"Failed to load frame {frame_number} "
-    #                 f"after {max_attempts} attempts "
-    #                 "returning blank frame")
-    #     return np.zeros((self.calibration.size[0], 
-    #                      self.calibration.size[1], 3), 
-    #                      dtype=np.uint8)
-    
     def _extract_frame(self, video_capture: cv2.VideoCapture, 
                        frame_number: int, max_attempts: int = 50) -> np.ndarray:
         """Extracts a frame from a video capture object.
@@ -275,107 +232,6 @@ class BaseCamera:
         return np.zeros((self.calibration.size[0], 
                          self.calibration.size[1], 3), 
                          dtype=np.uint8)
-
-
-    # def extract_frames(self, video_file:str, start_frame:int, end_frame:int, 
-    #                    sorted_frame_ids:List[int], mode:str
-    #                    ) -> List[np.ndarray]:
-    #     """
-    #     Extracts frames from a video file.
-
-    #     Arguments:
-    #     ----------
-    #     video_file: str
-    #         The name of the video file.
-    #     start_frame: int
-    #         The starting frame of the video.
-    #     end_frame: int
-    #         The ending frame of the video.
-    #     sorted_frame_ids: list
-    #         A list of sorted frame IDs to extract.  
-    #     mode: str
-    #         The mode of the camera (calibration or footage).
-            
-    #     Returns:
-    #     --------
-    #     extracted_frames: list
-    #         A list of extracted frames.
-    #     """
-    #     video = cv2.VideoCapture(str(self.data_root / 'raw_data' 
-    #                                  / mode / self.name / video_file))
-    #     video.set(cv2.CAP_PROP_POS_FRAMES, start_frame)
-    #     extracted_frames = [self._extract_frame(video, sorted_frame_ids[idx] 
-    #                                             - start_frame)
-    #                         for idx in range(len(sorted_frame_ids))
-    #                         if start_frame <= sorted_frame_ids[idx] < end_frame]
-    #     video.release()
-    #     return extracted_frames
-
-    # def extract(self, frame_ids: List[int], mode: str='footage'
-    #             ) -> List[np.ndarray]:
-    #     """
-    #     Extracts frames from the camera.
-
-    #     Arguments:
-    #     ----------
-    #     frame_ids: list
-    #         A list of frame IDs to extract.
-    #     mode: str, optional
-    #         The mode of the camera (calibration or footage).
-
-    #     Returns:
-    #     --------
-    #     extracted_frames: list
-    #         A list of extracted frames.
-    #     """
-    #     # Shift frame IDs by the first frame of the camera
-    #     frame_ids = [frame_id + self.first_frame for frame_id in frame_ids]
-
-    #     # Discard frame IDs that are out of range
-    #     valid_frame_ids = [frame_id for frame_id in frame_ids 
-    #                        if 0 <= frame_id <= self.max_frame]
-    #     discarded_ids = set(frame_ids) - set(valid_frame_ids)
-    #     if discarded_ids:
-    #         log.warning(f"Discarding frame IDs {discarded_ids} that are out of range.")
-
-    #     # Sort the frame IDs and keep track of the original order
-    #     sorted_indices = np.argsort(valid_frame_ids)
-    #     unsorted_indices = np.argsort(sorted_indices)
-    #     sorted_frame_ids = np.array(valid_frame_ids)[sorted_indices]
-
-    #     # Extract frames from each video file in parallel
-    #     extracted_frames = []
-    #     video_file = next(iter(self.video_dict[mode]))
-    #     current_frame_index = bisect.bisect_left(
-    #         sorted_frame_ids, self.video_dict[mode][video_file]['start'])
-    #     with concurrent.futures.ThreadPoolExecutor() as executor:
-    #         futures = []
-    #         for video_file in self.video_dict[mode]:
-    #             start_frame = self.video_dict[mode][video_file]['start']
-    #             end_frame = self.video_dict[mode][video_file]["end"]
-    #             if end_frame < sorted_frame_ids[current_frame_index]:
-    #                 # Update the current frame index
-    #                 log.info(f"Skipping video {video_file} that doesn't contain any requested frames")
-    #                 current_frame_index = bisect.bisect_left(sorted_frame_ids, 
-    #                                                           end_frame)
-    #                 continue
-    #             futures.append(executor.submit(self.extract_frames, video_file, 
-    #                                            start_frame, end_frame, 
-    #                                            sorted_frame_ids, mode))
-    #         for future in concurrent.futures.as_completed(futures):
-    #             extracted_frames.extend(future.result())
-
-    #     # Warn if the number of extracted frames doesn't match the number of requested frames
-    #     if len(extracted_frames) != len(valid_frame_ids):
-    #         log.warning(f"Expected to extract {len(valid_frame_ids)} frames but extracted {len(extracted_frames)} frames instead.")
-
-    #     # Restore the original order of the extracted frames
-    #     extracted_frames = [extracted_frames[index] for index 
-    #                         in unsorted_indices[:len(extracted_frames)]]
-
-    #     self.frames = extracted_frames
-    #     self.frame_ids = valid_frame_ids
-    #     return extracted_frames
     
     def extract(self, frame_ids: List[int], 
                 mode: str='footage', rgb=False) -> List[np.ndarray]:
@@ -426,7 +282,6 @@ class BaseCamera:
                                      / self.name / video_file))
             
             for idx in range(current_frame_index, len(sorted_frame_ids)):
-                # print(f"idx: {idx}, len(sorted_frame_ids): {len(sorted_frame_ids)}")
                 if sorted_frame_ids[idx] > end_frame:
                     break
 
@@ -450,7 +305,7 @@ class BaseCamera:
                 # If the frames are the same, remove the current frame
                 if (len(extracted_frames) > 2 and 
                     np.array_equal(extracted_frames[-1], extracted_frames[-2])):
-                    log.warning(f"Frame {shifted_id} same as the previous frame...")
+                    log.warning(f"Frame {shifted_id} same as previous frame...")
 
             current_frame_index = idx
             
@@ -603,15 +458,17 @@ class Camera(BaseCamera):
         for i, frame in enumerate(frames_to_undistort):
             if use_k_new:
                 undistorted_frame = cv2.undistort(frame, 
-                                                  np.array(self.calibration.K), 
-                                                  np.array(self.calibration.dist), 
-                                                  None, 
-                                                  np.array(self.calibration.K_new))
+                                                np.array(self.calibration.K), 
+                                                np.array(self.calibration.dist), 
+                                                None, 
+                                                np.array(self.calibration.K_new)
+                                                )
             else:
                 undistorted_frame = cv2.undistort(frame, 
-                                                  np.array(self.calibration.K), 
-                                                  np.array(self.calibration.dist),
-                                                  None)
+                                                np.array(self.calibration.K), 
+                                                np.array(self.calibration.dist),
+                                                None
+                                                )
 
             undistorted.append(undistorted_frame)
 
@@ -620,73 +477,6 @@ class Camera(BaseCamera):
                 cv2.imwrite(str(file_path), undistorted_frame)
 
         return undistorted
-
-    # def undistort(self, frames:List[np.ndarray]=[], 
-    #             output:Optional[Path]=None, use_k_new:bool=False
-    #             ) -> List[np.ndarray]:
-    #     """
-    #     Undistorts all the frames in self.frames and saves them
-    #     to output/undistorted if output is not None
-
-    #     Arguments:
-    #     ----------
-    #         frames(list): list of frames to undistort
-    #         output(str): path to output directory
-    #         use_k_new(bool): whether to use the new camera matrix
-
-    #     Returns:
-    #     --------
-    #         undistorted(list): list of undistorted frames
-    #     """
-    #     if use_k_new is None:
-    #         use_k_new = self.config["calibration"]["use_alpha_undistort"]
-            
-    #     if output is not None:
-    #         output = Path(output) / 'undistorted' / self.name
-    #         output.mkdir(parents=True, exist_ok=True)
-        
-    #     frames_to_undistort = []
-
-    #     if len(frames) == 0:
-    #         frames_to_undistort = self.frames
-    #         frame_ids = self.frame_ids
-    #     else:
-    #         frames_to_undistort = frames
-    #         frame_ids = range(len(frames))
-        
-    #     undistorted = []
-
-    #     # Compute the undistortion map
-    #     if use_k_new:
-    #         map1, map2 = cv2.fisheye.initUndistortRectifyMap(
-    #             np.array(self.calibration.K), 
-    #             np.array(self.calibration.dist), 
-    #             np.array(self.calibration.R), 
-    #             np.array(self.calibration.K_new), 
-    #             self.size, 
-    #             cv2.CV_16SC2
-    #         )
-    #     else:
-    #         map1, map2 = cv2.fisheye.initUndistortRectifyMap(
-    #             np.array(self.calibration.K), 
-    #             np.array(self.calibration.dist), 
-    #             np.eye(3), 
-    #             np.array(self.calibration.K), 
-    #             self.size, 
-    #             cv2.CV_16SC2
-    #         )
-
-    #     for i, frame in enumerate(frames_to_undistort):
-    #         # Undistort the frame using the map
-    #         undistorted_frame = cv2.remap(frame, map1, map2, cv2.INTER_LINEAR)
-
-    #         undistorted.append(undistorted_frame)
-
-    #         if output is not None:
-    #             file_path = output / f'{self.name}_{frame_ids[i]}.png'               
-    #             cv2.imwrite(str(file_path), undistorted_frame)
-
-    #     return undistorted
 
     def convert_to_camera_frame(self, points:np.ndarray
                                 ) -> Tuple[np.ndarray, List[bool]]:
@@ -977,12 +767,11 @@ class Camera(BaseCamera):
         --------
         H(np.ndarray): homography matrix
         """
-        bounding_box[1] *= (1 + padding_percent / 100)
         # make sure that aspect ratios of output image and bounding box are the same
         if output_img_size[1]/output_img_size[0] != bounding_box[1][0]/bounding_box[1][1]:
             log.warning("Aspect ratios of output image and bounding box are not the same."
-                        f"Output image aspect ratio: {output_img_size[1]/output_img_size[0]}, "
-                        f"bounding box aspect ratio: {bounding_box[1][0]/bounding_box[1][1]}")
+                        f"Output image aspect ratio: {output_img_size[1] / output_img_size[0]}, "
+                        f"bounding box aspect ratio: {bounding_box[1][0] / bounding_box[1][1]}")
 
         # Get the camera calibration
         K = self.calibration.K
@@ -997,7 +786,10 @@ class Camera(BaseCamera):
 
         # Scale the bounding box by the image size
         longest_side = max(output_img_size)
-        scale = longest_side / max(bounding_box[1][0]*(1 + self.padding_percent / 100), bounding_box[1][1]*(1 + self.padding_percent / 100))
+        scale = longest_side / max(bounding_box[1][0] 
+                                   * (1 + self.padding_percent / 100), 
+                                   bounding_box[1][1] 
+                                   * (1 + self.padding_percent / 100))
 
         # Output image size (width, height) in pixels 
         # derived from the bounding box
@@ -1031,7 +823,6 @@ class Camera(BaseCamera):
         K_new[1,1] = K[1,1] * factory
         K_new[0,2] = K[0,2] * factorx
         K_new[1,2] = K[1,2] * factory
-
 
         # Compute the homography that maps the ground plane onto output image
         H = K_new @ RT @ rot @ np.linalg.inv(Ki)
