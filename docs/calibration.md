@@ -51,7 +51,9 @@ Some keypoints may exist outside of the scene.
 An example reconstruction can be found at 'images/reconstruction.json'.
 
 A visualisation in the reconstruction viewer should look like the following:
-![Example reconstruction visualisation.](/images/reconstruction.gif)
+<div style="text-align:center">
+    ![Example reconstruction visualisation.](images/reconstruction.gif){: width="70%"}
+</div>
 
 To double-check the reconstruction it is recommended to use MeshLab to visualise 'undistorted/depthmaps/merged.ply'.
 
