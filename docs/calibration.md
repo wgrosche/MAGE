@@ -73,6 +73,8 @@ Choose a region of interest (ROI) that contains the ground plane. Try to avoid s
 points that have large obstacles.
 
 An example ROI is shown below:
+
+
 <img src="/images/groundplane_selection.jpg" alt="Example ROI Selection." width="60%"/>
 
 
