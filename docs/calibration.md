@@ -1,5 +1,21 @@
+# Dataset Format:
+Data can be placed in the --data folder defined in project_config.yaml or directly in the --data_root folder. If placed in the --data folder a symlink will be created to --data_root. It should be noted that symlinks established inside/outside of docker containers or on different systems do not migrate well.
 
+The expected folder structure is as follows:
+- --data:
+    - raw_data:
+        - footage
+            - cam1
+                video_file_cam1.mp4
+            - cam2
+            - cam3
+        - calibration
+            - cam1
+                video_file_cam1.mp4
+            - cam2
+            - cam3
 
+The symlinks created link the footage and calibration folders to '--data_root/raw_data/footage' and '--data_root/raw_data/calibration' respectively.
 
 ### 0-calibration-setup
 Prepares the environment, ensures that all necessary arguments are set. Outputs its findings to the logger.
