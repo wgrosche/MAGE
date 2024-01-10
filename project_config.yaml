@@ -1,0 +1,11 @@
+# Project config
+---
+  --main:
+     --data_root: "/root/data" # Data root used by the calibration pipeline, by default data supplied in "--data" is symlinked here
+     --code_root: "/root/code" # Code root used by the calibration pipeline
+     --data: "/root/data_source" # Folder for data storage, by default this is symlinked to --data_root
+
+  --calibration:
+   #   --focal_length: "507" # tag to be added to metadata
+     --omni_tag: '360'     # tag to identify omnidirectional camera
+     --opensfm_repo: "/OpenSfM" # Path to OpenSfM installation
