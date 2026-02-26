@@ -57,7 +57,7 @@ google-auth==2.19.1
 google-auth-oauthlib==1.0.0
 grpcio==1.54.2
 humanfriendly==10.0
-idna==3.4
+idna==3.7
 imageio==2.27.0
 imageio-ffmpeg==0.4.8
 imagesize==1.4.1
