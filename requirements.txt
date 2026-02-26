@@ -47,7 +47,7 @@ ExifRead==2.1.2
 fastjsonschema==2.17.1
 ffmpeg-python==0.2.0
 filelock==3.20.3
-Flask==2.3.2
+Flask==3.1.3
 fonttools==4.60.2
 fpdf2==2.4.6
 fqdn==1.5.1
