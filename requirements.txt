@@ -46,7 +46,7 @@ executing==1.2.0
 ExifRead==2.1.2
 fastjsonschema==2.17.1
 ffmpeg-python==0.2.0
-filelock==3.9.0
+filelock==3.20.3
 Flask==2.3.2
 fonttools==4.60.2
 fpdf2==2.4.6
