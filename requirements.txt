@@ -55,7 +55,7 @@ future==0.18.3
 gast==0.5.2
 google-auth==2.19.1
 google-auth-oauthlib==1.0.0
-grpcio==1.54.2
+grpcio==1.54.3
 humanfriendly==10.0
 idna==3.7
 imageio==2.27.0
