@@ -14,7 +14,7 @@ Babel==2.12.1
 backcall==0.2.0
 beautifulsoup4==4.12.2
 beniget==0.4.1
-black==23.3.0
+black==24.3.0
 bleach==6.0.0
 blinker==1.6.2
 cachetools==5.3.1
