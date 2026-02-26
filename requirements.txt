@@ -31,7 +31,7 @@ comm==0.1.3
 contextvars==2.4
 contourpy==1.0.7
 cycler==0.11.0
-dash==2.9.2
+dash==2.15.0
 dash-core-components==2.0.0
 dash-html-components==2.0.0
 dash-table==5.0.0
